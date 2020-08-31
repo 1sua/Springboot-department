@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ls.mapper.EmployeeMapper">
+
+    <select id="queryAllEmployee" resultMap="EmployeeDTO">
+        select e.eid id,e.name name,e.email email,e.gender gender,d.departmentName departmentName,e.birth birth
+        from springboot.employee e,springboot.department d
+        where e.e_did = d.did
+        <if test="name != null">
+            and e.name like "%"#{name}"%"
+        </if>
+    </select>
+
+    <select id="queryEmpLikeName" parameterType="pageBean" resultMap="EmployeeDTO">
+        select e.eid id,e.name name,e.email email,e.gender gender,d.departmentName departmentName,e.birth birth
+        from springboot.employee e,springboot.department d
+        where e.e_did = d.did
+    </select>
+
+    <resultMap id="EmployeeDTO" type="com.ls.dto.EmployeeDTO">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+        <result property="gender" column="gender"/>
+        <result property="departmentName" column="departmentName"/>
+        <result property="birth" column="birth"/>
+    </resultMap>
+
+    <select id="queryEmployee" resultType="Employee">
+        select * from springboot.employee where eid = #{eid};
+    </select>
+
+    <insert id="addEmployee" parameterType="Employee">
+        insert into springboot.employee (name, email, gender, e_did, birth) values
+        (#{name},#{email},#{gender},#{did},#{birth});
+    </insert>
+
+    <delete id="deleteEmployee">
+        delete from springboot.employee where eid = #{eid};
+    </delete>
+
+    <update id="updateEmployee" parameterType="Employee">
+        update springboot.employee set name = #{name},email = #{email},gender = #{gender},e_did = #{did},birth =
+        #{birth} where eid = #{eid};
+    </update>
+
+</mapper>

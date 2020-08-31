@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ls.mapper.DepartmentMapper">
+
+    <select id="queryAllDepartment" resultType="Department">
+        select * from springboot.department;
+    </select>
+
+    <select id="queryDepartment" resultType="string">
+        select departmentName from springboot.department where did = #{did};
+    </select>
+
+</mapper>
